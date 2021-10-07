@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer" />
+    <title>User Search</title>
+  </head>
+  <body class="bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9 mx-auto">
+          <div class="card card-body text-center mt-5">
+            <legend class="mb-3">Github User Search</legend>
+            <form action="" method="post">
+              <div class="input-group">
+                <input
+                  type="search"
+                  id="github_name"
+                  name="github_name"
+                  class="form-control"
+                  placeholder="Who are you looking for?" />
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-search"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+          <br />
+          {% if user %}
+          <div id="profile">
+            <div class="card card-body mb-3">
+              <div class="row">
+                <div class="col-md-3 text-center">
+                  <img class="img-fluid mb-2" src="{{user.avatar_url}}" />
+                  <a
+                    href="{{user.html_url}}"
+                    target="_blank"
+                    class="link btn-block mb-4"
+                    style="text-decoration: none; color: #9fbff5"
+                    ><small>View profile</small>
+                  </a>
+                </div>
+                <div class="col-md-9 text-center">
+                  <span class="badge bg-primary p-2 mb-1"
+                    >Repo count: {{user.public_repos}}</span
+                  >
+                  <span class="badge bg-secondary p-2 mb-1"
+                    >Gist count: {{user.public_gists}}</span
+                  >
+                  <span class="badge bg-success p-2 mb-1"
+                    >Followers: {{user.followers}}</span
+                  >
+                  <span class="badge bg-info p-2 mb-1"
+                    >Following: {{user.following}}</span
+                  >
+                  <br /><br />
+                  <ul class="list-group text-start">
+                    <li class="list-group-item">Company: {{user.company}}</li>
+                    <li class="list-group-item">Website: {{user.blog}}</li>
+                    <li class="list-group-item">Location: {{user.location}}</li>
+                    <li class="list-group-item">
+                      User since: {{user.created_at}}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <legend class="page-heading mb-3">Latest repos</legend>
+            <div id="repos" style="margin-bottom: 100px">
+              {% for repo in repos %}
+              <div class="card card-body mb-2">
+                <div class="row">
+                  <div class="col-md-5 mt-1">
+                    <span>{{repo.name}}</span>
+                  </div>
+                  <div class="col-md-5">
+                    <span class="badge bg-primary p-2 mt-1"
+                      >Stars:{{repo.stargazers_count}}</span
+                    >
+                    <span class="badge bg-secondary p-2 mt-1"
+                      >Watchers:{{repo.watchers}}</span
+                    >
+                    <span class="badge bg-success p-2 mt-1"
+                      >Forks:{{repo.forks_count}}</span
+                    >
+                  </div>
+                  <div class="col-md-2 text-end mt-1">
+                    <a
+                      href="{{repo.html_url}}"
+                      target="_blank"
+                      class="link"
+                      style="text-decoration: none; color: #9fbff5">
+                      Visit repository</a
+                    >
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+            {% elif error %}
+            <div class="alert alert-danger">{{error}}</div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"></script>
+  </body>
+</html>
